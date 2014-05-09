@@ -166,10 +166,139 @@ namespace Art.Website.Controllers
         #endregion
 
         #region Types Page
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <returns>
+        /// The ActionResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 3:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ActionResult Types()
         {
-            return View();
+            var models = GetTypesModel();
+            return View(models);
         }
+        /// <summary>
+        /// Arts the types.
+        /// </summary>
+        /// <returns>
+        /// PartialViewResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 3:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PartialViewResult ProfessionList()
+        {
+            var artworkTypes = GetTypesModel();
+            return PartialView("_TypesList", artworkTypes);
+        }
+
+        /// <summary>
+        /// Gets the types model.
+        /// </summary>
+        /// <returns>
+        /// IList{ProfessionModel}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 3:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private IList<ProfessionModel> GetTypesModel()
+        {
+            var professions = ArtistBussinessLogic.Instance.GetProfessions();
+            var models = ProfessionTranslator.Instance.Translate(professions);
+            return models;
+        }
+
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// The JsonResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 12:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public JsonResult AddProfession(ProfessionModel model)
+        {
+            var profession = ProfessionTranslator.Instance.Translate(model);
+
+            if (ArtistBussinessLogic.Instance.GetProfessionByName(model.Name) != null)
+            {
+                return Json(new ResultModel(false, "已存在相同名称的分类!"));
+            }
+            ArtistBussinessLogic.Instance.Add(profession);
+
+            var result = new ResultModel(true, "add successfully!");
+            return Json(result);
+        }
+
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// The JsonResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 12:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public JsonResult UpdateProfession(ProfessionModel model)
+        {
+            var profession = ProfessionTranslator.Instance.Translate(model);
+
+            var ret = ArtistBussinessLogic.Instance.GetProfessionByName(model.Name);
+            if (ret != null && ret.Id != model.Id)
+            {
+                return Json(new ResultModel(false, "已存在相同名称的分类!"));
+            }
+            ArtistBussinessLogic.Instance.UpdateProfession(profession);
+
+            var result = new ResultModel(true, "update successfully!");
+
+            return Json(result);
+        }
+        /// <summary>
+        /// Deletes the profession.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// JsonResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 5:33 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public JsonResult DeleteProfession(int id)
+        {
+            var profession = ArtistBussinessLogic.Instance.GetProfession(id);
+            if (profession.Artists.Count > 0)
+            {
+                return Json(new ResultModel(false, "请将该分类下的艺术家全部删除后，方可进行分类的删除~"));
+            }
+            ArtistBussinessLogic.Instance.DeleteProfession(profession);
+
+            var result = new ResultModel(true, "Delete successfully!");
+
+            return Json(result);
+        }
+        
         #endregion
     }
 }

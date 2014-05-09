@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.BussinessLogic;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,15 @@ namespace Art.Website.Models
 
         public override Profession Translate(ProfessionModel from)
         {
-            var to = new Profession();
-            to.Id = from.Id;
+            Profession to;
+            if (from.Id > 0)
+            {
+                to = ArtistBussinessLogic.Instance.GetProfession(from.Id);
+            }
+            else
+            {
+                to = new Profession();
+            }
             to.Name = from.Name;
             return to;
         }

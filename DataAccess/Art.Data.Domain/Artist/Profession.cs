@@ -18,6 +18,6 @@ namespace Art.Data.Domain
         [StringLength(30)]
         public string Name { get; set; }
 
-        public  ICollection<Artist> Artists { get; set; }
+        public virtual ICollection<Artist> Artists { get; set; }
     }
 }
