@@ -65,7 +65,7 @@
                     return false;
                 }
                 return true;
-            }, "end datetime should be greater than start datetime");
+            }, "开始时间不能晚于结束时间");
 
             options.rules["Artwork.StartDateTime"] = { DateValidate: true };
             options.rules["Artwork.EndDateTime"] = { DateValidate: true };
@@ -151,11 +151,17 @@
 
             if (model.Artwork.Id == 0) {
                 model.Artwork.AuctionPrice = "";
+                model.Artwork.AuctionTypeId = 1;
             }
 
             model.SourceArtMaterials = getArtworkTypeSubItem(artworkType, "ArtMaterials");
             model.SourceArtShapes = getArtworkTypeSubItem(artworkType, "ArtShapes");
-            model.SourceArtTechniques = getArtworkTypeSubItem(artworkType, "ArtTechniques");
+            model.SourceArtTechniques = getArtworkTypeSubItem(artworkType, "ArtTechniques"); model.IsHideAuctionDateTime = model.Artwork.AuctionTypeId == 1;
+
+            model.IsHideAuctionDateTime = model.Artwork.AuctionTypeId == 1;
+            model.switchActionType = function (e) {
+                this.set("IsHideAuctionDateTime", e.currentTarget.value == 1);
+            }
         }
 
         function save(model) {

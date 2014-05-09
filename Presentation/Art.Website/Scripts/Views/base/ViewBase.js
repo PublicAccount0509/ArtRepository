@@ -26,12 +26,12 @@ art.ui.view = {};
                     var propName = $property.attr("property-name");
                     control.name = propName;
 
-                    var bindStr = "";
+                    var bindStr = $(control).attr("data-bind");
                     if (typeof (adapter.valueField) == "function") {
-                        bindStr = adapter.valueField(propName);
+                        bindStr += "," + adapter.valueField(propName);
                     }
                     else {
-                        bindStr = adapter.valueField + ":" + propName;
+                        bindStr += "," + adapter.valueField + ":" + propName;
                     }
 
                     if ($property.attr("data-source")) {

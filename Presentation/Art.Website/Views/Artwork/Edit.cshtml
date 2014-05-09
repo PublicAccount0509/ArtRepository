@@ -150,7 +150,7 @@
                     @foreach (var item in Model.SourceAuctionTypes)
                     {
                         <span>
-                            <input type="radio" name="" value="@item.Value" />@item.Text</span>                        
+                            <input type="radio" name="" value="@item.Value" data-bind="click:switchActionType"/>@item.Text</span>                        
                     }
                     <label for="@PropName(i => i.Artwork.AuctionTypeId)" class="error t-errormessage">请选择拍卖方式</label>
                 </dd>
@@ -200,7 +200,7 @@
                     </p>
                 </dd>
             </dl>
-            <dl class="clearfix control-group datetime" property-name="@PropName(i => i.Artwork.StartDateTime)"  control-type="datetimeControl">
+            <dl  data-bind="invisible:IsHideAuctionDateTime" class="clearfix control-group datetime" property-name="@PropName(i => i.Artwork.StartDateTime)"  control-type="datetimeControl">
                 <dt><i>*</i>开拍时间:</dt>
                 <dd>
                     <input type="text"  class="datepicker" id="@PropName(i => i.Artwork.StartDateTime)" name="@PropName(i => i.Artwork.StartDateTime)" readonly="readonly" class="inp">
@@ -222,7 +222,7 @@
 					<label for="@PropName(i => i.Artwork.StartDateTime)" generated="true" class="error" ></label>
                 </dd>
             </dl>
-            <dl class="clearfix control-group datetime" property-name="@PropName(i => i.Artwork.EndDateTime)"  control-type="datetimeControl">
+            <dl  data-bind="invisible:IsHideAuctionDateTime" class="clearfix control-group datetime" property-name="@PropName(i => i.Artwork.EndDateTime)"  control-type="datetimeControl">
                 <dt><i>*</i>结束时间:</dt>
                 <dd>
                     <input type="text" class="datepicker" id="@PropName(i => i.Artwork.EndDateTime)"  name="@PropName(i => i.Artwork.EndDateTime)" readonly="readonly" class="inp">
