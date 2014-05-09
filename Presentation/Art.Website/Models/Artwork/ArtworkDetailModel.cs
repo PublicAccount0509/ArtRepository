@@ -43,14 +43,14 @@ namespace Art.Website.Models
             to.Institution = from.Institution;
             to.Size = from.Size;
             to.ArtMaterial = from.ArtMaterial.Name;
-            to.Period = from.ArtPeriod.Name;
+            to.Period = from.ArtYear.ToString();
             to.ArtworkType = from.ArtworkType.Name;
             to.Genre = from.Genre.Name;
             to.ArtShape = from.ArtShape == null ? null : from.ArtShape.Name;
             to.ArtTechnique = from.ArtTechnique == null ? null : from.ArtTechnique.Name;
             to.CreationInspiration = from.CreationInspiration;
             to.SuitablePlaces = from.SuitableArtPlaces.Select(i => i.Name).ToArray();
-            to.AuctionType = from.AuctionType.Name;
+            to.AuctionType = from.AuctionType.ToString();
             to.AuctionPrice = from.AuctionPrice;
             to.StartDateTime = from.StartDateTime;
             to.EndDateTime = from.EndDateTime;

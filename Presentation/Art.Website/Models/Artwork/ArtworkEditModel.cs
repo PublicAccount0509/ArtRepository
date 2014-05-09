@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
+using WebExpress.Core.Enums;
 
 namespace Art.Website.Models
 {
@@ -19,7 +20,7 @@ namespace Art.Website.Models
 
         public IList<ValueTextEntry> SourceGenres { get; set; }
 
-        public IList<ValueTextEntry> SourceAuctionTypes { get; set; }
+        public IList<IEnumItem> SourceAuctionTypes { get; set; }
 
         public IList<ArtworkTypeModel> SourceArtworkTypes { get; set; }
 

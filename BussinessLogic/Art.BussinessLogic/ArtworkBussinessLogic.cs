@@ -20,9 +20,8 @@ namespace Art.BussinessLogic
         private readonly IRepository<ArtMaterial> _artMaterialRepository;
         private readonly IRepository<ArtShape> _artShapeRepository;
         private readonly IRepository<ArtTechnique> _artTechniqueRepository;
-        private readonly IRepository<ArtPeriod> _artPeriodRepository;
+        //private readonly IRepository<ArtPeriod> _artPeriodRepository;
         private readonly IRepository<ArtPlace> _artPlaceRepository;
-        private readonly IRepository<AuctionType> _auctionTypeRepository;
 
         private ArtworkBussinessLogic()
         {
@@ -31,9 +30,8 @@ namespace Art.BussinessLogic
             _artMaterialRepository = new EfRepository<ArtMaterial>();
             _artShapeRepository = new EfRepository<ArtShape>();
             _artTechniqueRepository = new EfRepository<ArtTechnique>();
-            _artPeriodRepository = new EfRepository<ArtPeriod>();
+            //_artPeriodRepository = new EfRepository<ArtPeriod>();
             _artPlaceRepository = new EfRepository<ArtPlace>();
-            _auctionTypeRepository = new EfRepository<AuctionType>();
         }
 
         public List<ArtworkType> GetArtworkTypes()
@@ -108,30 +106,21 @@ namespace Art.BussinessLogic
             return _artTechniqueRepository.GetById(id);
         }
 
-        public ArtPeriod GetPeriod(int id)
-        {
-            return _artPeriodRepository.GetById(id);
-        }
+        //public ArtPeriod GetPeriod(int id)
+        //{
+        //    return _artPeriodRepository.GetById(id);
+        //}
 
-        public ICollection<ArtPeriod> GetPeriods()
-        {
-            return _artPeriodRepository.Table.ToList();
-        }
+        //public ICollection<ArtPeriod> GetPeriods()
+        //{
+        //    return _artPeriodRepository.Table.ToList();
+        //}
 
         public ICollection<ArtPlace> GetPlaces()
         {
             return _artPlaceRepository.Table.ToList();
         }
-
-        public AuctionType GetAuctionType(int id)
-        {
-            return _auctionTypeRepository.GetById(id);
-        }
-
-        public ICollection<AuctionType> GetAuctionTypes()
-        {
-            return _auctionTypeRepository.Table.ToList();
-        }
+         
 
         public ICollection<ArtPlace> GetArtPlaces(List<int> ids)
         {

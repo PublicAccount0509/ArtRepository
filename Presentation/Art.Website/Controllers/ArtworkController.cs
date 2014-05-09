@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Website.Models;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebExpress.Core.Guards;
+using WebExpress.Core.TypeExtensions;
 using WebExpress.Website.Exceptions;
 
 namespace Art.Website.Controllers
@@ -36,14 +38,43 @@ namespace Art.Website.Controllers
             return Json(model);
         }
 
-        public ActionResult AddArtworkType(ArtworkTypeModel model)
+        public JsonResult AddArtworkType(ArtworkTypeModel model)
         {
+            if (string.IsNullOrEmpty(model.Text))
+            {
+                return Json(new ResultModel(false, "分类不可为空"));
+            }
+
+            for (int i = 0; i < model.ArtMaterials.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtMaterials[i].Text))
+                {
+                    return Json(new ResultModel(false, "材质不可为空"));
+                }
+            }
+
+            for (int i = 0; i < model.ArtShapes.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtShapes[i].Text))
+                {
+                    return Json(new ResultModel(false, "形制不可为空"));
+                }
+            }
+
+            for (int i = 0; i < model.ArtTechniques.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtTechniques[i].Text))
+                {
+                    return Json(new ResultModel(false, "技法不可为空"));
+                }
+            }
+
+
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
             ArtworkBussinessLogic.Instance.AddArtworkType(artworkType);
 
             var result = new ResultModel(true, string.Empty);
             return Json(result);
-
         }
 
         public void Test()
@@ -57,6 +88,8 @@ namespace Art.Website.Controllers
 
         public ActionResult UpdateArtworkType(ArtworkTypeModel model)
         {
+
+
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
             ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
 
@@ -110,6 +143,13 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult Update(ArtworkModel model)
         {
+            //bussiness check
+            if (model.AuctionType == AuctionType.一口价)
+            {
+                model.StartDateTime = null;
+                model.EndDateTime = null;
+            }
+
             var artwork = ArtworkModelTranslator.Instance.Translate(model);
 
             ArtworkBussinessLogic.Instance.Update(artwork);
@@ -217,14 +257,15 @@ namespace Art.Website.Controllers
             var genres = ArtistBussinessLogic.Instance.GetGenres();
             model.SourceGenres = IdNameModelTranslator<Genre>.Instance.Translate(genres);
 
-            var periods = ArtworkBussinessLogic.Instance.GetPeriods();
-            model.SourceArtPeriods = IdNameModelTranslator<ArtPeriod>.Instance.Translate(periods);
+            //var periods = ArtworkBussinessLogic.Instance.GetPeriods();
+            //model.SourceArtPeriods = IdNameModelTranslator<ArtPeriod>.Instance.Translate(periods);
 
             var places = ArtworkBussinessLogic.Instance.GetPlaces();
             model.SourceArtPlaces = IdNameModelTranslator<ArtPlace>.Instance.Translate(places);
 
-            var auctionTypes = ArtworkBussinessLogic.Instance.GetAuctionTypes();
-            model.SourceAuctionTypes = IdNameModelTranslator<AuctionType>.Instance.Translate(auctionTypes);
+            model.SourceAuctionTypes = EnumExtenstion.GetEnumItems<AuctionType>();
+
+
 
             return model;
         }

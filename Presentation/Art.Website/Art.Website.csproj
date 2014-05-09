@@ -347,6 +347,7 @@
     <Content Include="Handlers\FileUploadHandler.ashx" />
     <Content Include="Content\images\icon\img-x.psd" />
     <Content Include="Content\images\icon\sprite-icon.psd" />
+    <None Include="Properties\PublishProfiles\PublishPolicy1.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery.validate.additional-methods.js" />
     <Content Include="Scripts\jquery.validate.additional-methods.min.js" />

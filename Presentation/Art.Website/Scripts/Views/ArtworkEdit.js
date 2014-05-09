@@ -49,6 +49,7 @@
         function initValidation() {
             var options = {
                 onkeyup: false,
+                ignore: [],
                 rules: {}
             };
             var properties = $("[property-name]");
@@ -61,11 +62,14 @@
             }
 
             jQuery.validator.addMethod("DateValidate", function (value, element) {
+                if (viewModel.Artwork.AuctionType == 1) {
+                    return true;
+                }
                 if (viewModel.Artwork.EndDateTime <= viewModel.Artwork.StartDateTime) {
                     return false;
                 }
                 return true;
-            }, "开始时间不能晚于结束时间");
+            }, "请正确输入时间，并且开始时间不能晚于结束时间");
 
             options.rules["Artwork.StartDateTime"] = { DateValidate: true };
             options.rules["Artwork.EndDateTime"] = { DateValidate: true };
@@ -105,7 +109,7 @@
                 if (item.field == "Artwork.ArtworkTypeId") {
                     var artworkTypeId = item.sender.get();
                     var artworkType = $.grep(model.SourceArtworkTypes, function (element, index) {
-                        return element.Value == artworkTypeId;
+                        return element.Id == artworkTypeId;
                     })[0];
 
                     var materials = getArtworkTypeSubItem(artworkType, "ArtMaterials");
@@ -126,7 +130,7 @@
         }
 
         function getArtworkTypeSubItem(artworkType, itemTypeName) {
-            var sourceItems = [{ Value: "", Text: "未选" }];
+            var sourceItems = [{ Id: "", Text: "未选" }];
             if (!artworkType) {
                 return sourceItems;
             }
@@ -151,14 +155,14 @@
 
             if (model.Artwork.Id == 0) {
                 model.Artwork.AuctionPrice = "";
-                model.Artwork.AuctionTypeId = 1;
+                model.Artwork.AuctionType = 1;
             }
 
             model.SourceArtMaterials = getArtworkTypeSubItem(artworkType, "ArtMaterials");
             model.SourceArtShapes = getArtworkTypeSubItem(artworkType, "ArtShapes");
-            model.SourceArtTechniques = getArtworkTypeSubItem(artworkType, "ArtTechniques"); model.IsHideAuctionDateTime = model.Artwork.AuctionTypeId == 1;
+            model.SourceArtTechniques = getArtworkTypeSubItem(artworkType, "ArtTechniques"); model.IsHideAuctionDateTime = model.Artwork.AuctionType == 1;
 
-            model.IsHideAuctionDateTime = model.Artwork.AuctionTypeId == 1;
+            model.IsHideAuctionDateTime = model.Artwork.AuctionType == 1;
             model.switchActionType = function (e) {
                 this.set("IsHideAuctionDateTime", e.currentTarget.value == 1);
             }

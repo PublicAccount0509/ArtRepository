@@ -40,7 +40,7 @@ namespace Art.Website.Models
             {
                 to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
             }
-            to.AuctionType = from.AuctionType.Name;
+            to.AuctionType = from.AuctionType.ToString();
             to.IsPublic = from.IsPublic;
             return to;
         }

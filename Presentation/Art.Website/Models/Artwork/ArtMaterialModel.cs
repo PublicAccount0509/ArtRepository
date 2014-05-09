@@ -8,7 +8,7 @@ namespace Art.Website.Models
 {
     public class ArtMaterialModel
     {
-        public int Value { get; set; }
+        public int Id { get; set; }
         public string Text { get; set; }
         public bool IsUsed { get; set; }
     }
@@ -20,7 +20,7 @@ namespace Art.Website.Models
         public override ArtMaterialModel Translate(ArtMaterial from)
         {
             var to = new ArtMaterialModel();
-            to.Value = from.Id;
+            to.Id = from.Id;
             to.Text = from.Name;
             to.IsUsed = from.Artworks.Any();
             return to;
@@ -29,7 +29,7 @@ namespace Art.Website.Models
         public override ArtMaterial Translate(ArtMaterialModel from)
         {
             var to = new ArtMaterial();
-            to.Id = from.Value;
+            to.Id = from.Id;
             to.Name = from.Text;
             return to;
         }

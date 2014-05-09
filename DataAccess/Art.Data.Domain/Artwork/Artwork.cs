@@ -20,7 +20,8 @@ namespace Art.Data.Domain
         public DateTime? EndDateTime { get; set; }
 
 
-        public virtual ArtPeriod ArtPeriod { get; set; }
+        //public virtual ArtPeriod ArtPeriod { get; set; }
+        public virtual int ArtYear { get; set; }
         public virtual Genre Genre { get; set; }
         public string CreationInspiration { get; set; }
         public string ImageFileName { get; set; }

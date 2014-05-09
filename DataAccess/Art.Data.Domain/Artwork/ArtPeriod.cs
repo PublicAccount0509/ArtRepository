@@ -8,8 +8,8 @@ using WebExpress.Core;
 
 namespace Art.Data.Domain
 {
-    public class ArtPeriod : BaseEntity, IIdNameEntry, ISoftDelete
-    {
-        public string Name { get; set; }
-    }
+    //public class ArtPeriod : BaseEntity, IIdNameEntry, ISoftDelete
+    //{
+    //    public string Name { get; set; }
+    //}
 }

@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Website.Common.Config;
 using System;
@@ -27,13 +28,13 @@ namespace Art.Website.Models
         public int? ArtShapeId { get; set; }
         public int? ArtTechniqueId { get; set; }
 
-        public int PeriodId { get; set; }
+        public int ArtYear { get; set; }
         public int GenreId { get; set; }
         public string CreationInspiration { get; set; }
         public List<int> SuitablePlaceIds { get; set; }
         public string ImageFileName { get; set; }
 
-        public int AuctionTypeId { get; set; }
+        public AuctionType AuctionType { get; set; }
         public decimal AuctionPrice { get; set; }
 
         public DateTime? StartDateTime { get; set; }
@@ -69,7 +70,7 @@ namespace Art.Website.Models
             to.ArtShapeId = from.ArtShape == null ? (int?)null : from.ArtShape.Id;
             to.ArtTechniqueId = from.ArtTechnique == null ? (int?)null : from.ArtTechnique.Id;
 
-            to.PeriodId = from.ArtPeriod.Id;
+            to.ArtYear = from.ArtYear;
             to.GenreId = from.Genre.Id;
             to.CreationInspiration = from.CreationInspiration;
             to.SuitablePlaceIds = from.SuitableArtPlaces.Select(i => i.Id).ToList();
@@ -78,7 +79,7 @@ namespace Art.Website.Models
                 to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
             }
 
-            to.AuctionTypeId = from.AuctionType.Id;
+            to.AuctionType = from.AuctionType;
             to.AuctionPrice = from.AuctionPrice;
 
             to.StartDateTime = from.StartDateTime;
@@ -110,7 +111,7 @@ namespace Art.Website.Models
             to.ArtShape = from.ArtShapeId == null ? null : ArtworkBussinessLogic.Instance.GetArtShape(from.ArtShapeId.Value);
             to.ArtTechnique = from.ArtTechniqueId == null ? null : ArtworkBussinessLogic.Instance.GetArtTechnique(from.ArtTechniqueId.Value);
 
-            to.ArtPeriod = ArtworkBussinessLogic.Instance.GetPeriod(from.PeriodId);
+            to.ArtYear = from.ArtYear;// ArtworkBussinessLogic.Instance.GetPeriod(from.ArtYear);
             to.Genre = ArtistBussinessLogic.Instance.GetGenre(from.GenreId);
             to.CreationInspiration = from.CreationInspiration;
             to.SuitableArtPlaces = ArtworkBussinessLogic.Instance.GetArtPlaces(from.SuitablePlaceIds);
@@ -120,7 +121,7 @@ namespace Art.Website.Models
                 to.ImageFileName = new Uri(from.ImageFileName).Segments.Last();
             }
 
-            to.AuctionType = ArtworkBussinessLogic.Instance.GetAuctionType(from.AuctionTypeId);
+            to.AuctionType = from.AuctionType;
             to.AuctionPrice = from.AuctionPrice;
             to.StartDateTime = from.StartDateTime;
             to.EndDateTime = from.EndDateTime;

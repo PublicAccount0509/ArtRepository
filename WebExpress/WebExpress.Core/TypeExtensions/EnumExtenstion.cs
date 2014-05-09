@@ -15,7 +15,16 @@ namespace WebExpress.Core.TypeExtensions
             var result = new List<IEnumItem>();
             foreach (var item in items)
             {
-                var vt = new EnumItem { Value = (int)item, Text = item.ToString() };
+                var name = item.ToString();
+
+                var mi = typeof(T).GetMember(name).First();
+                var dtAttribute =  mi.GetCustomAttributes(typeof(DisplayTextAttribute), false).FirstOrDefault();
+                
+                if (dtAttribute !=null)
+                {
+                    name = (dtAttribute as DisplayTextAttribute).DisplayText;
+                }
+                var vt = new EnumItem { Value = (int)item, Text = name };
                 result.Add(vt);
             }
             return result.ToArray();

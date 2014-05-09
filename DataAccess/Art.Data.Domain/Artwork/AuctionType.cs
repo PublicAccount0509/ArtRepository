@@ -8,8 +8,8 @@ using WebExpress.Core;
 
 namespace Art.Data.Domain
 {
-    public class AuctionType : BaseEntity, IIdNameEntry
-    {
-        public string Name { get; set; }
-    }
+    //public class AuctionType : BaseEntity, IIdNameEntry
+    //{
+    //    public string Name { get; set; }
+    //}
 }

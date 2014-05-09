@@ -14,7 +14,7 @@ art.ui.view = {};
             _self.refresh = refresh;
         }
 
-        function addType(artworkType,onSuccess) {
+        function addType(artworkType, onSuccess) {
             var url = "/Artwork/AddArtworkType";
             webExpress.utility.ajax.request(url, artworkType, function (data) {
                 if (data.IsSuccess) {
@@ -22,6 +22,8 @@ art.ui.view = {};
                         onSuccess();
                     }
                     refresh();
+                } else {
+                    alert(data.Message);
                 }
             });
         }
@@ -37,7 +39,7 @@ art.ui.view = {};
             });
         }
 
-        function updateType(artworkType,onSuccess) {
+        function updateType(artworkType, onSuccess) {
             var url = "/Artwork/UpdateArtworkType";
             webExpress.utility.ajax.request(url, artworkType, function (data) {
                 if (data.IsSuccess) {
@@ -45,7 +47,11 @@ art.ui.view = {};
                         onSuccess();
                     }
                     refresh();
+                } else {
+                    alert(data.Message);
                 }
+            }, function () {
+                console.log("error");
             });
         }
 
@@ -53,6 +59,8 @@ art.ui.view = {};
             var url = "/Artwork/ArtworkTypes";
             webExpress.utility.ajax.request(url, null, function (data) {
                 $(".data").html(data);
+            }, function () {
+
             });
         }
 

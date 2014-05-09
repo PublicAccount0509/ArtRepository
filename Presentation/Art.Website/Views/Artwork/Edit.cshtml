@@ -28,7 +28,7 @@
                 <dd>
                     @{
                         var disabledString = !_isEditMode && Model.Artwork.ArtistId > 0 ? "disabled='disabled'" : "";
-                        }
+                    }
                     <select @disabledString>
                         <option value="">未选</option>
                         @foreach (var item in Model.SourceArtists)
@@ -51,30 +51,17 @@
                     <label for="@PropName(i => i.Artwork.Size)" class="error t-errormessage">请输入作品大小</label>
                 </dd>
             </dl>
-            <dl class="clearfix control-group mandatory"  data-source="SourceArtMaterials" property-name="@PropName(i => i.Artwork.ArtMaterialId)" control-type="simpleDropdown">
-                <dt><i>*</i>材质:</dt>
-                <dd>
-                    <select data-value-field="Value" data-text-field="Text">
-                        <option value="">未选</option>
-                        @*@foreach (var item in Model.SourceGenres)
-						{
-							<option value="@item.Id">@item.Name</option>    
-						}*@
-                    </select>
-                    <label for="@PropName(i => i.Artwork.ArtMaterialId)" class="error t-errormessage">请选择材质</label>
-                </dd>
-            </dl>
-            <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.PeriodId)" control-type="simpleDropdown">
+            <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.ArtYear)" control-type="simpleDropdown">
                 <dt><i>*</i>创作年代:</dt>
                 <dd>
                     <select>
                         <option value="">未选</option>
-                        @foreach (var item in Model.SourceArtPeriods)
+                        @for (int i = 1949; i <= DateTime.Now.Year; i++)
                         {
-                            <option value="@item.Value">@item.Text</option>    
+                            <option value="@i">@i</option>    
                         }
                     </select>
-                    <label for="@PropName(i => i.Artwork.PeriodId)" class="error t-errormessage">请选择年代</label>
+                    <label for="@PropName(i => i.Artwork.ArtYear)" class="error t-errormessage">请选择年代</label>
                 </dd>
             </dl>
             <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.ArtworkTypeId)" control-type="simpleDropdown">
@@ -84,12 +71,43 @@
                         <option value="">未选</option>
                         @foreach (var item in Model.SourceArtworkTypes)
                         {
-                            <option value="@item.Value">@item.Text</option>    
+                            <option value="@item.Id">@item.Text</option>    
                         }
                     </select>
                     <label for="@PropName(i => i.Artwork.ArtworkTypeId)" class="error t-errormessage">请选择作品分类</label>
                 </dd>
             </dl>
+
+            <dl class="clearfix control-group mandatory"  data-source="SourceArtMaterials" property-name="@PropName(i => i.Artwork.ArtMaterialId)" control-type="simpleDropdown">
+                <dt><i>*</i>材质:</dt>
+                <dd>
+                    <select data-value-field="Id" data-text-field="Text">
+                        <option value="">未选</option>
+                        @*@foreach (var item in Model.SourceGenres)
+						{
+							<option value="@item.Id">@item.Name</option>    
+						}*@
+                    </select>
+                    <label for="@PropName(i => i.Artwork.ArtMaterialId)" class="error t-errormessage">请选择材质</label>
+                </dd>
+            </dl>
+            <dl class="clearfix control-group" data-source="SourceArtShapes" property-name="@PropName(i => i.Artwork.ArtShapeId)" control-type="simpleDropdown">
+                <dt><i>*</i>形制:</dt>
+                <dd>
+                    <select data-value-field="Id" data-text-field="Text">
+                        <option value="">未选</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="clearfix control-group" data-source="SourceArtTechniques" property-name="@PropName(i => i.Artwork.ArtTechniqueId)" control-type="simpleDropdown">
+                <dt><i>*</i>技法:</dt>
+                <dd>
+                    <select data-value-field="Id" data-text-field="Text">
+                        <option value="">未选</option>
+                    </select>
+                </dd>
+            </dl>
+
             <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.GenreId)" control-type="simpleDropdown">
                 <dt><i>*</i>题材:</dt>
                 <dd>
@@ -101,22 +119,6 @@
                         }
                     </select>
                     <label for="@PropName(i => i.Artwork.GenreId)" class="error t-errormessage">请选择题材</label>
-                </dd>
-            </dl>
-            <dl class="clearfix control-group" data-source="SourceArtShapes" property-name="@PropName(i => i.Artwork.ArtShapeId)" control-type="simpleDropdown">
-                <dt><i>*</i>形制:</dt>
-                <dd>
-                    <select data-value-field="Value" data-text-field="Text">
-                        <option value="">未选</option>
-                    </select>
-                </dd>
-            </dl>
-            <dl class="clearfix control-group" data-source="SourceArtTechniques" property-name="@PropName(i => i.Artwork.ArtTechniqueId)" control-type="simpleDropdown">
-                <dt><i>*</i>技法:</dt>
-                <dd>
-                    <select data-value-field="Value" data-text-field="Text">
-                        <option value="">未选</option>
-                    </select>
                 </dd>
             </dl>
             <dl class="clearfix control-group" property-name="@PropName(i => i.Artwork.CreationInspiration)" control-type="simpleTextarea">
@@ -136,15 +138,21 @@
                     <label for="@PropName(i => i.Artwork.SuitablePlaceIds)" class="error t-errormessage">请选择适用空间</label>
                 </dd>
             </dl>
-            <dl class="clearfix control-group mandatory" property-name="Artwork.ImageFileName" control-type="simpleImg">
+            <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.ImageFileName)" control-type="simpleImg">
                 <dt><i>*</i>作品图片</dt>
+
                 <dd>
-                    <input type="file" name="fileImage" />
-                    <br />
-                    <img src="" alt="" />
+                    <p>
+                        <input type="file" name="fileImage" />
+                        <label for="@PropName(i => i.Artwork.ImageFileName)" class="error t-errormessage">请选择作品图片</label>
+                    </p>
+                    <p>
+                        <img class="userzp uploadFile" />
+                        <input type="hidden" name="@PropName(i => i.Artwork.ImageFileName)" data-bind="value:Artwork.ImageFileName" />
+                    </p>
                 </dd>
             </dl>
-            <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.AuctionTypeId)" control-type="simpleRadioButton">
+            <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.AuctionType)" control-type="simpleRadioButton">
                 <dt><i>*</i>拍卖方式:</dt>
                 <dd class="checkboxjj">
                     @foreach (var item in Model.SourceAuctionTypes)
@@ -152,7 +160,7 @@
                         <span>
                             <input type="radio" name="" value="@item.Value" data-bind="click:switchActionType"/>@item.Text</span>                        
                     }
-                    <label for="@PropName(i => i.Artwork.AuctionTypeId)" class="error t-errormessage">请选择拍卖方式</label>
+                    <label for="@PropName(i => i.Artwork.AuctionType)" class="error t-errormessage">请选择拍卖方式</label>
                 </dd>
             </dl>
             <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.AuctionPrice)" control-type="simpleTextbox">
@@ -219,7 +227,7 @@
                         }
                     </select>
                     分 
-					<label for="@PropName(i => i.Artwork.StartDateTime)" generated="true" class="error" ></label>
+					<label for="@PropName(i => i.Artwork.StartDateTime)" generated="true" class="error t-errormessage" ></label>
                 </dd>
             </dl>
             <dl  data-bind="invisible:IsHideAuctionDateTime" class="clearfix control-group datetime" property-name="@PropName(i => i.Artwork.EndDateTime)"  control-type="datetimeControl">
@@ -241,7 +249,7 @@
                         }
                     </select>
                     分
-					<label for="@PropName(i => i.Artwork.EndDateTime)" generated="true" class="error" ></label>
+					<label for="@PropName(i => i.Artwork.EndDateTime)" generated="true" class="error t-errormessage" ></label>
                 </dd>
             </dl>
 

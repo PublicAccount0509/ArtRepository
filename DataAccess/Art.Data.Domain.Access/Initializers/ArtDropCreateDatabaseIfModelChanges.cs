@@ -101,11 +101,12 @@ namespace Art.Data.Domain.Access.Initializers
             var artPlaces = "卧室、餐厅、客厅、办公室、书房、酒吧".Split('、').Select(i => new ArtPlace { Name = i }).ToList(); // new List<ArtPlace>() { new ArtPlace { Name = "卧室" }, new ArtPlace { Name = "客厅" }, new ArtPlace { Name = "餐厅" }, new ArtPlace { Name = "办公室" } };
             context.Set<ArtPlace>().AddRange(artPlaces);
 
-            var artPeriods = new List<ArtPeriod>() { new ArtPeriod { Name = "50 n" }, new ArtPeriod { Name = "60 n" }, new ArtPeriod { Name = "70 n" } };
-            context.Set<ArtPeriod>().AddRange(artPeriods);
+           // var artPeriods = new List<ArtPeriod>() { new ArtPeriod { Name = "50 n" }, new ArtPeriod { Name = "60 n" }, new ArtPeriod { Name = "70 n" } };
 
-            var auctionTypes = new List<AuctionType>() { new AuctionType { Name = "一口价 " }, new AuctionType { Name = "竞价拍-上升价格拍" }, new AuctionType { Name = "竞价拍-向下价格拍 " } };
-            context.Set<AuctionType>().AddRange(auctionTypes);
+            //context.Set<ArtPeriod>().AddRange(artPeriods);
+
+            //var auctionTypes = new List<AuctionType>() { new AuctionType { Name = "一口价 " }, new AuctionType { Name = "竞价拍-上升价格拍" }, new AuctionType { Name = "竞价拍-向下价格拍 " } };
+            //context.Set<AuctionType>().AddRange(auctionTypes);
 
             context.SaveChanges();
 
@@ -113,9 +114,9 @@ namespace Art.Data.Domain.Access.Initializers
             artwork.Name = "蒙娜丽莎的微笑";
             artwork.Artist = context.Set<Artist>().First();
             artwork.ArtMaterial = context.Set<ArtMaterial>().First();
-            artwork.ArtPeriod = context.Set<ArtPeriod>().First();
+            artwork.ArtYear = 2009;// context.Set<ArtPeriod>().First();
             artwork.ArtworkType = context.Set<ArtworkType>().First();
-            artwork.AuctionType = context.Set<AuctionType>().First();
+            artwork.AuctionType = AuctionType.一口价;
             artwork.Genre = context.Set<Genre>().First();
             artwork.AuctionPrice = 998;
             artwork.CreationInspiration = "apple";
