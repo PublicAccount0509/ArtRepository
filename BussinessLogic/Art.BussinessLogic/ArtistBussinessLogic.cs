@@ -74,6 +74,28 @@ namespace Art.BussinessLogic
             return professions;
         }
 
+        public Profession GetProfession(int id)
+        {
+           return _professionRepository.GetById(id);
+        }
+        /// <summary>
+        /// Gets the name of the profession by.
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns>
+        /// The Profession
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 5:44 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Profession GetProfessionByName(string name)
+        {
+            var profession = _professionRepository.Table.Where( p=>name == p.Name);
+            return profession.FirstOrDefault();
+        }
+
         public Genre[] GetGenres()
         {
             var genres = _genreRepository.Table.ToArray();
@@ -144,6 +166,62 @@ namespace Art.BussinessLogic
                         select p;
             return query.ToList();
         }
+        /// <summary>
+        /// Searches the professions.
+        /// </summary>
+        /// <returns>
+        /// IList{Profession}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 2:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public IList<Profession> SearchProfessions()
+        {
+            var query = _professionRepository.Table.ToList();
 
+            //var result = new List<Profession>(query);
+            return query;
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="profession">The profession</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 12:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void Add(Profession profession)
+        {
+            _professionRepository.Insert(profession);
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="profession">The profession</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 12:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void UpdateProfession(Profession profession)
+        {
+            _professionRepository.Update(profession);
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="profession">The profession</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/9/2014 5:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void DeleteProfession(Profession profession)
+        {
+            _professionRepository.Delete(profession);
+        }
     }
 }
