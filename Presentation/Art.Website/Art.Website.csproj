@@ -373,6 +373,7 @@
     <Content Include="Scripts\jquery.validate.messages_zh.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Views\ArtistEdit.js" />
+    <Content Include="Scripts\Views\ArtistTypes.js" />
     <Content Include="Scripts\Views\ArtworkTypes.js" />
     <Content Include="Scripts\Views\base\ViewBase.js" />
     <Content Include="Scripts\Views\MessageList.js" />
@@ -446,6 +447,7 @@
     <Content Include="Views\Auction\List.cshtml" />
     <Content Include="Views\Order\AuctionList.cshtml" />
     <Content Include="Views\AdminUser\List.cshtml" />
+    <Content Include="Views\Artist\_TypesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
